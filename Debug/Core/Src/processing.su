@@ -1,0 +1,2 @@
+processing.c:65:9:GetTempCfromLUT	32	static
+processing.c:123:10:generateCRC32	16	static
