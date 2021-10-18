@@ -1,2 +1,2 @@
-processing.c:44:9:GetTempCfromLUT	32	static
-processing.c:60:10:generateCRC32	16	static
+processing.c:43:9:GetTempCfromLUT	24	static
+processing.c:72:10:generateCRC32	16	static

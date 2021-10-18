@@ -14,15 +14,13 @@
 
 /* Deklaration der Variablen ---------------------------------------------------------*/
 
-#define LUT_table_size 37
-
 const 	uint16_t LUT[151];
 		uint32_t tempCRC;
 
 
 /* Deklaration der Funktionen ---------------------------------------------------------*/
 
-uint8_t GetTempCfromLUT(const uint16_t *LUT, uint16_t ntcResistance, int size);
+uint8_t GetTempCfromLUT(const uint16_t *LUT, uint16_t ntcResistance);
 
 
 #endif /* INC_PROCESSING_H_ */

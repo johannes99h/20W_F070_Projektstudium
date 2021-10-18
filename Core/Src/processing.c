@@ -36,28 +36,42 @@ const 	uint16_t LUT[151] = {
 /*
  * 	@brief	Temperaturermittlung durch Abgleich von Verhältnis zwischen gemessenem und normalem NTC-Widerstand (298K)
  * 	@param	Pointer zum Lookup-Table
- * 	@param	???																			-> sollte hier nicht der NTC-Wert übergeben werden?
- * 	@param	???
- * 	@ret	Integer
+ * 	@param	Übergabe des durch den ADC ermittelten Widerstands eines NTCs
+ * 	@ret	ermittelte Temperatur in Grad Celsius
  */
 
-uint8_t GetTempCfromLUT(const uint16_t *LUT, uint16_t ntcResistance, int size)
+uint8_t GetTempCfromLUT(const uint16_t *LUT, uint16_t ntcResistance)
 {
-	int j = 0;
-	uint16_t t;
+	int i = 0;
+	uint8_t tempC;
 
-	while(ntcResistance < LUT[j])
+	// Absuchen des Lookup-Tables, effizientere Variante möglich! (in der Mitte starten & vergleichen?)
+	while(ntcResistance < LUT[i])
 	{
-		j++;
+		i++;
 	}
 
-	t = j;
+	// Temperaturzuweisung
+	tempC = i;
 
+	// Plausibilitätskontrolle
+	if(tempC < 0 || tempC > 150)		// angeg. Temperaturbereich der NTCs: < 125 Grad Celsius!!!
+	{
+		tempC = 255;
+	}
 
-	return t;
+	return tempC;
 }
 
-uint32_t generateCRC32(uint8_t temp)
+/*
+ * 	@brief	CRC-Berechnung für die Temperatur eines einzelnen NTCs
+ * 	@param	ermittelte Temperatur
+ * 	@ret	CRC
+ */
+
+uint32_t generateCRC32(uint8_t tempC)
 {
+	// CRC-Berechnung
+
 	return 0;
 }
