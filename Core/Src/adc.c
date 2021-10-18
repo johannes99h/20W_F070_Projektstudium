@@ -59,16 +59,8 @@ uint32_t *GetADCResistance(uint16_t *adcBufferMeanValue)
 	for(int i = 0; i < adcChannel; i++)
 	{
 		ntcResistance[i] = (adcVoltage[i] * ntcResistance25[i]) / (330 - adcVoltage[i]);
-		ntcRTtoR25[i] = ntcResistance[i];
 	}
 
-	/*
-	for(int i = 0; i < adcChannel; i++)
-	{
-		ntcRTtoR25[i] = (10000 * ntcResistance[i] / ntcResistance25[i]);
-	}
-	*/
-
-	return ntcRTtoR25;
+	return ntcResistance;
 
 }

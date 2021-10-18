@@ -27,15 +27,13 @@ uint16_t adcVal[buff_length];
 uint16_t adcBufferMeanValue[adcChannel];
 uint16_t adcVoltage[adcChannel];
 uint16_t ntcResistance[adcChannel];
-uint16_t ntcResistance25[adcChannel];
-uint32_t ntcRTtoR25[adcChannel];
 uint16_t tempZero;
 
 /*
  * 		Funktionsdeklarationen
  */
 
-uint16_t * ClearADCBuffer(uint16_t *adcBuffer);
+uint16_t *ClearADCBuffer(uint16_t *adcBuffer);
 uint32_t *GetADCResistance(uint16_t *adcBufferMeanValue);
 
 #endif /* INC_ADC_H_ */

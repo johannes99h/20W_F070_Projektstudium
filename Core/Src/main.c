@@ -449,7 +449,7 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
 
 	for(int i = 0; i < adcChannel; i++)
 	{
-		tempC[i] = GetTempCfromLUT(table, ntcRTtoR25[i], LUT_table_size);		//only one call seems better
+		tempC[i] = GetTempCfromLUT(LUT, ntcResistance[i], LUT_table_size);		//only one call seems better
 	}
 
 	TempTxUART(bufferTxSize, tempC);
