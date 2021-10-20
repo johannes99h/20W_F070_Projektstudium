@@ -9,19 +9,7 @@
 
 /* Definition der Variablen ---------------------------------------------------------*/
 
-uint8_t divider[1] = "*";
-uint8_t ntcNumber[adcChannel] = {														// ist doch vollkommen unnötig?!
-	 	 	 	 	 	 	0b000000000,
-							0b000000001,
-							0b000000010,
-							0b000000011,
-							0b000000100,
-							0b000000101,
-							0b000000110,
-							0b000000111,
-							0b000001000
-						};
-
+uint8_t adcChannels = 9;
 
 
 /* Definition der Funktionen ---------------------------------------------------------*/
@@ -32,13 +20,15 @@ uint8_t ntcNumber[adcChannel] = {														// ist doch vollkommen unnötig?!
 
 void TxUART()
 {
-	blankTxUART(divider);
-	ntcNumberTxUART(adcChannel);
+	// blankTxUART(divider);
+	ntcNumberTxUART(adcChannels);
 	// TempTxUART(bufferTxSize, tempC);													-> Funktion muss angepasst werden!
-	CRCTxUART(tempCRC);
-	blankTxUART(divider);
+	// CRCTxUART(tempCRC);
+	//if(blankTxUART(divider) != 0)
+	// {
+		// eigene Error-Handler-Funktion, vlt. Senden dass in der Funktion was schief gelaufen ist?
+	// }
 }
-
 
 
 /*
@@ -46,19 +36,20 @@ void TxUART()
  * 	@param	Pointer zur mittels Lookup-Table ermittelten Temperatur
  */
 
-void TempTxUART(uint16_t bufferTxSize, uint8_t *tempC)
+void TempTxUART(uint16_t bufferTxSize, uint8_t *tempC, uint8_t adcChannels)			// bufferTxSize kann vmtl. auch weg
 {
-	// alte Lösung -> zu ineffizient
-	for(int i = 0; i < adcChannel; i++)
+	//alte Lösung -> zu ineffizient, funktioniert aber!
+	for(int i = 0; i < adcChannels; i++)
 	{
-		bufferTxSize = sprintf(bufferTx, "NTC%d, %d\r\n", i, tempC[i]);
+		bufferTxSize = sprintf(bufferTx, "%d", tempC[i]);
 		HAL_UART_Transmit(&huart1, (uint8_t *) bufferTx, bufferTxSize, 10);
+		blankTxUART();
 	}
 
-	// neue Lösung -> nur eine Temperatur übertragen
-	HAL_UART_Transmit(&huart1, tempC, sizeof(tempC), 10);								// wie Timeouts sinnvoll umsetzen? (weglassen?)
-}
 
+	// neue Lösung -> nur eine Temperatur übertragen
+	// HAL_UART_Transmit(&huart1, tempToTransmit, sizeof(tempToTransmit), 10);								// wie Timeouts sinnvoll umsetzen? (weglassen?)
+}
 
 
 /*
@@ -66,12 +57,11 @@ void TempTxUART(uint16_t bufferTxSize, uint8_t *tempC)
  * 	@param	Pointer zum Array, der NTC-Nummern 											-> eigentlich überflüssig...
  */
 
-void ntcNumberTxUART(uint8_t *ntcNumber)
+void ntcNumberTxUART(uint8_t adcChannels)
 {
-	HAL_UART_Transmit(&huart1, ntcNumber, sizeof(ntcNumber), 10);
+	HAL_UART_Transmit(&huart1, adcChannels, sizeof(adcChannels), 10);
 	// beim Empfang mittels Bitshift zerlegen & ablehnen, falls Bits vor der ersten 1 ungleich Null sind!
 }
-
 
 
 /*
@@ -79,12 +69,23 @@ void ntcNumberTxUART(uint8_t *ntcNumber)
  * 	@param	ASCII-codiertes Zeichen														-> auf Empfängerseite als "Stop" erkennen
  */
 
-void blankTxUART(uint8_t *divider)
+int blankTxUART()
 {
+	uint8_t divider[1] = "*";				// sehe (gerade) keinen Grund für eine globale Variable
+
 	HAL_UART_Transmit(&huart1, divider, sizeof(divider), 10);
+
+	return 0;
 }
 
-void CRCTxUART(uint32_t tempCRC)
-{
+/*
+ * 	@brief "UART-Zwischenframe"
+ * 	@param	ASCII-codiertes Zeichen														-> auf Empfängerseite als "Stop" erkennen
+ */
 
+int CRCTxUART(uint32_t tempCRC)				// in TempTxUART() integrieren? sollte ja eigentlich direkt danach ausgeführt werden...
+{
+	HAL_UART_Transmit(&huart1, tempCRC, sizeof(tempCRC), 10);
+
+	return 0;
 }

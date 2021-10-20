@@ -67,9 +67,11 @@ uint16_t coeffB = 3625;										//removed array, should be the same for all of 
 															//should also be obsolete due to lookup table...
 uint16_t tempK[adcChannel];
 uint8_t tempC[adcChannel];
-char bufferTx[50];
+char bufferTx[25];
 uint16_t bufferTxSize;
 uint16_t resistor[adcChannelSelect] = { 0, 0, 9960, 9900, 9950, 0, 0, 0, 0 };
+
+uint8_t tempToTransmit;
 
 /* USER CODE END PV */
 
@@ -452,7 +454,17 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
 		tempC[i] = GetTempCfromLUT(LUT, ntcResistance[i]);		//only one call seems better
 	}
 
-	TempTxUART(bufferTxSize, tempC);
+	TempTxUART(bufferTxSize, tempC, adcChannels);
+
+	// for(int i = 0; i < adcChannels; i++)
+	// {
+	// 	bufferTxSize = sprintf(bufferTx, "%d", tempC[i]);
+	// 	HAL_UART_Transmit(&huart1, (uint8_t *) bufferTx, bufferTxSize, 10);
+	// }
+
+	// uint8_t test[4] = "Test";
+
+	// HAL_UART_Transmit(&huart1, test, sizeof(test), 10);
 }
 
 

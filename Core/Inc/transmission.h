@@ -18,25 +18,24 @@
 extern UART_HandleTypeDef huart1;
 extern DMA_HandleTypeDef hdma_usart1_tx;
 
-#define adcChannel 9
 
 /* Deklaration der Variablen ---------------------------------------------------------*/
 
 // alt
-char bufferTx[50];				// char nicht unbed. nötig, auch mit uint8_t-Array lösbar -> stdio.h nicht notwendig
+char bufferTx[25];				// char nicht unbed. nötig, auch mit uint8_t-Array lösbar -> stdio.h nicht notwendig
 uint16_t bufferTxSize;
 
 // neu
 uint8_t divider[1];
-uint8_t ntcNumber[9];																	// äquivalent zu adcChannel!
 uint32_t tempCRC;
+uint8_t adcChannels;
 
 /* Deklaration der Funktionen ---------------------------------------------------------*/
 
-void TxUART();
-void TempTxUART(uint16_t bufferTxSize, uint8_t *tempC);
-void ntcNumberTxUART();
-void blankTxUART(uint8_t *divider);
-void CRCTxUART(uint32_t tempCRC);
+void 	TxUART();
+void 	TempTxUART(uint16_t bufferTxSize, uint8_t *tempC, uint8_t adcChannels);
+void 	ntcNumberTxUART(uint8_t adcChannels);
+int 	blankTxUART();
+int	 	CRCTxUART(uint32_t tempCRC);
 
 #endif /* INC_TRANSMISSION_H_ */
