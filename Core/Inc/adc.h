@@ -27,7 +27,6 @@ uint16_t adcVal[buffLength];
 uint16_t adcBufferMeanValue[adcChannel];
 uint16_t adcVoltage[adcChannel];
 uint16_t ntcResistance[adcChannel];
-// uint16_t tempZero;
 
 /*
  * 		Funktionsdeklarationen

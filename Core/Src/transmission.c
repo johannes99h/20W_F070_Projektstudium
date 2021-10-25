@@ -118,3 +118,13 @@ int CRCTxUART(uint32_t tempCRC)				// in TempTxUART() integrieren? sollte ja eig
 
 	return 0;
 }
+
+
+/*
+ * Einstellungen für Logic Analyzer
+ * 		2400 Bit/s
+ * 		7 Bits per Transfer
+ * 		1 Stop Bit
+ * 		Even Parity
+ * 		LSB First
+ */

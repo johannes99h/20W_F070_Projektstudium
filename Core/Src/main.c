@@ -59,7 +59,6 @@ DMA_HandleTypeDef hdma_usart1_tx;
 /* USER CODE BEGIN PV */
 char bufferTx[25];
 
-uint8_t tempToTransmit;
 uint8_t tempC[adcChannel];
 uint16_t bufferTxSize;
 
@@ -443,7 +442,7 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
 
 	for(int i = 0; i < adcChannel; i++)
 	{
-		tempC[i] = GetTempCfromLUT(LUT, ntcResistance[i]);		//only one call seems better
+		tempC[i] = GetTempCfromLUT(LUT, ntcResistance[i]);
 	}
 
 	TempTxUART(bufferTxSize, tempC, adcChannels);
