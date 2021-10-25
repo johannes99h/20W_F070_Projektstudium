@@ -15,8 +15,7 @@ extern ADC_HandleTypeDef hadc;
 extern DMA_HandleTypeDef hdma_adc;
 
 #define adcChannel 9
-#define adcChannelSelect
-#define buffLength 90
+#define buffLength 45
 
 /*
  * 		Deklarationen

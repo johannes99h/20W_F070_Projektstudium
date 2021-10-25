@@ -28,6 +28,7 @@
 #include "init.h"
 #include "processing.h"
 #include "transmission.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -38,9 +39,7 @@
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 #define adcChannel 9
-#define adcChannelSelect
-#define buff_length 27
-#define LUT_table_size 37									//add more data points
+#define buffLength 45
 
 /* USER CODE END PD */
 
@@ -52,26 +51,17 @@
 /* Private variables ---------------------------------------------------------*/
 ADC_HandleTypeDef hadc;
 DMA_HandleTypeDef hdma_adc;
-
 CRC_HandleTypeDef hcrc;
-
 TIM_HandleTypeDef htim1;
-
 UART_HandleTypeDef huart1;
 DMA_HandleTypeDef hdma_usart1_tx;
 
 /* USER CODE BEGIN PV */
-int size;													//size of the lookup table -> define?!
-
-uint16_t coeffB = 3625;										//removed array, should be the same for all of them
-															//should also be obsolete due to lookup table...
-uint16_t tempK[adcChannel];
-uint8_t tempC[adcChannel];
 char bufferTx[25];
-uint16_t bufferTxSize;
-uint16_t resistor[adcChannelSelect] = { 0, 0, 9960, 9900, 9950, 0, 0, 0, 0 };
 
 uint8_t tempToTransmit;
+uint8_t tempC[adcChannel];
+uint16_t bufferTxSize;
 
 /* USER CODE END PV */
 
@@ -126,7 +116,7 @@ int main(void)
   MX_USART1_UART_Init();
   MX_CRC_Init();
   /* USER CODE BEGIN 2 */
-  HAL_ADC_Start_DMA(&hadc, (uint32_t *)adcBuffer, buff_length);
+  HAL_ADC_Start_DMA(&hadc, (uint32_t *)adcBuffer, buffLength);
   HAL_TIM_Base_Start(&htim1);
 
   /* USER CODE END 2 */
@@ -445,7 +435,9 @@ static void MX_GPIO_Init(void)
 /* USER CODE BEGIN 4 */
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
 {
-	ClearADCBuffer(adcBuffer);		//better if I pass only one value at a time to the sub-functions?
+	ClearADCBuffer(adcBuffer);
+
+	GetADCMeanValue(adcVal, 5);
 
 	GetADCResistance(adcBufferMeanValue);
 

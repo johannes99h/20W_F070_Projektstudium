@@ -1,3 +1,3 @@
-adc.c:31:11:ClearADCBuffer	24	static
-adc.c:64:11:GetADCMeanValue	32	static
-adc.c:88:11:GetADCResistance	24	static
+adc.c:30:11:ClearADCBuffer	24	static
+adc.c:45:11:GetADCMeanValue	32	static
+adc.c:70:11:GetADCResistance	24	static

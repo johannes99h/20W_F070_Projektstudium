@@ -21,7 +21,7 @@ uint16_t ntcResistance25[adcChannel] =	{	10000,
 											10000,
 											10000
 										};
-uint8_t adcSamples = 10;
+uint8_t adcSamples = 5;								// erfüllt den gleichen Zweck wie buff_length -> zsm.führen
 
 /*
  * 		Funktionsdefinitionen
@@ -29,17 +29,18 @@ uint8_t adcSamples = 10;
 
 uint16_t *ClearADCBuffer(uint16_t *adcBuffer)
 {
-	for(int i = 0; i < adcChannel; i++)
+	for(int i = 0; i < (adcChannel * adcSamples); i++)
 	{
 		// Übertragung des Werts vom Buffer auf ein weiteres Array
 		adcVal[i] = adcBuffer[i];
 
-		// Nullsetzung des übertragenen Buffereintrags
+		// Nullsetzung der Position des übertragenen Buffereintrags
 		adcBuffer[i] = 0;
 	}
 
 	return adcVal;
 }
+
 
 uint16_t *GetADCMeanValue(uint16_t *adcVal, uint8_t adcSamples)
 {
@@ -64,6 +65,7 @@ uint16_t *GetADCMeanValue(uint16_t *adcVal, uint8_t adcSamples)
 
 	return adcBufferMeanValue;
 }
+
 
 uint16_t *GetADCResistance(uint16_t *adcBufferMeanValue)
 {
