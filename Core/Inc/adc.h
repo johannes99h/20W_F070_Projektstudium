@@ -16,24 +16,26 @@ extern DMA_HandleTypeDef hdma_adc;
 
 #define adcChannel 9
 #define adcChannelSelect
-#define buff_length 27
+#define buffLength 90
 
 /*
  * 		Deklarationen
  */
 
-uint16_t adcBuffer[buff_length];
-uint16_t adcVal[buff_length];
+uint8_t adcSamples;
+uint16_t adcBuffer[buffLength];
+uint16_t adcVal[buffLength];
 uint16_t adcBufferMeanValue[adcChannel];
 uint16_t adcVoltage[adcChannel];
 uint16_t ntcResistance[adcChannel];
-uint16_t tempZero;
+// uint16_t tempZero;
 
 /*
  * 		Funktionsdeklarationen
  */
 
 uint16_t *ClearADCBuffer(uint16_t *adcBuffer);
-uint32_t *GetADCResistance(uint16_t *adcBufferMeanValue);
+uint16_t *GetADCMeanValue(uint16_t *adcVal, uint8_t adcSamples);
+uint16_t *GetADCResistance(uint16_t *adcBufferMeanValue);
 
 #endif /* INC_ADC_H_ */

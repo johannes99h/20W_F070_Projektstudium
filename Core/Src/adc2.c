@@ -1,33 +1,34 @@
 /*
- * adc.c
+ * adc2.c
  *
- *  Created on: Jul 6, 2021
+ *  Created on: 25.10.2021
  *      Author: johan
  */
 
-#include "adc.h"
+
+// #define buffLength 10
 
 /*
- * 		Definition der Variablen
+ * 		Deklarationen
  */
 
-uint16_t ntcResistance25[adcChannel] =	{	10000,
-											10000,
-											10000,
-											10000,
-											10000,
-											10000,
-											10000,
-											10000,
-											10000
-										};
-uint8_t adcSamples = 10;
+
+/*
+uint8_t adcSamples;
+uint16_t adcBuffer[buffLength];
+uint16_t adcVal[buffLength];
+uint16_t adcBufferMeanValue[adcChannel];
+uint16_t adcVoltage[adcChannel];
+uint16_t ntcResistance[adcChannel];
+*/
+
 
 /*
  * 		Funktionsdefinitionen
  */
 
-uint16_t *ClearADCBuffer(uint16_t *adcBuffer)
+/*
+uint16_t *ClearADCBuffer(uint16_t *adcBuffer, uint8_t adcChannel)
 {
 	for(int i = 0; i < adcChannel; i++)
 	{
@@ -41,7 +42,8 @@ uint16_t *ClearADCBuffer(uint16_t *adcBuffer)
 	return adcVal;
 }
 
-uint16_t *GetADCMeanValue(uint16_t *adcVal, uint8_t adcSamples)
+
+uint16_t GetADCMeanValue(uint16_t *adcVal, uint8_t adcSamples)	// buffLength == adcSamples? -> ja
 {
 	int k = 0;
 
@@ -67,13 +69,13 @@ uint16_t *GetADCMeanValue(uint16_t *adcVal, uint8_t adcSamples)
 
 uint16_t *GetADCResistance(uint16_t *adcBufferMeanValue)
 {
-	// Berechnung der Spannung an den NTCs
+	//voltage at the NTCs
 	for(int i = 0; i < adcChannel; i++)
 	{
 		adcVoltage[i] = 33 * (adcBufferMeanValue[i] * 10) / 4095;
 	}
 
-	// Berechnung der einzelnen NTC-Widerstände
+	//calculate related NTC-resistance
 	for(int i = 0; i < adcChannel; i++)
 	{
 		ntcResistance[i] = (adcVoltage[i] * ntcResistance25[i]) / (330 - adcVoltage[i]);
@@ -82,3 +84,5 @@ uint16_t *GetADCResistance(uint16_t *adcBufferMeanValue)
 	return ntcResistance;
 
 }
+
+*/

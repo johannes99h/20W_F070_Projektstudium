@@ -15,19 +15,48 @@ uint8_t adcChannels = 9;
 /* Definition der Funktionen ---------------------------------------------------------*/
 
 /*
- * 	@brief Senden der NTC-Nummer, des Werts & eines "Stop"-Zeichens
+ * 	@brief Senden der NTC-Nummer, der Temperatur, des zugehörigen CRCs & mehrerer "Stop"-Zeichen
+ * 		***** NTC1 * 25°C * CRC1 ** NTC2 * 30°C * CRC2 ** ... **********
  */
 
-void TxUART()
+void TxUART(uint8_t adcChannels, uint8_t *tempC)						// Parallelisierung mit Berechnung wäre irgendwie sinnvoll...
 {
-	// blankTxUART(divider);
-	ntcNumberTxUART(adcChannels);
-	// TempTxUART(bufferTxSize, tempC);													-> Funktion muss angepasst werden!
-	// CRCTxUART(tempCRC);
-	//if(blankTxUART(divider) != 0)
-	// {
-		// eigene Error-Handler-Funktion, vlt. Senden dass in der Funktion was schief gelaufen ist?
-	// }
+	uint8_t ntcNumber = 0;
+
+	for(int i = 0; i < 5; i++)
+	{
+		blankTxUART();
+	}
+
+	for(int j = 0; j < adcChannels; j++)
+	{
+		ntcNumber = j;
+
+		ntcNumberTxUART(ntcNumber);
+		blankTxUART();
+		// TempTxUART(bufferTxSize, tempC);													// -> Funktion muss angepasst werden!
+		singleTempTxUART(ntcNumber, tempC);
+		blankTxUART();
+		// CRCTxUART(tempCRC);
+		for(int k = 0; k < 2; k++)
+		{
+			blankTxUART();
+		}
+	}
+
+	for(int l = 0; l < 10; l++)
+	{
+		blankTxUART();
+	}
+}
+
+
+void singleTempTxUART(uint8_t ntcNumber, uint8_t *tempC)
+{
+	uint8_t *transmitTemp;
+
+	transmitTemp = tempC[ntcNumber];
+	HAL_UART_Transmit(&huart1, transmitTemp, sizeof(transmitTemp), 10);
 }
 
 
@@ -57,9 +86,9 @@ void TempTxUART(uint16_t bufferTxSize, uint8_t *tempC, uint8_t adcChannels)			//
  * 	@param	Pointer zum Array, der NTC-Nummern 											-> eigentlich überflüssig...
  */
 
-void ntcNumberTxUART(uint8_t adcChannels)
+void ntcNumberTxUART(uint8_t ntcNumber)
 {
-	HAL_UART_Transmit(&huart1, adcChannels, sizeof(adcChannels), 10);
+	HAL_UART_Transmit(&huart1, ntcNumber, sizeof(ntcNumber), 10);
 	// beim Empfang mittels Bitshift zerlegen & ablehnen, falls Bits vor der ersten 1 ungleich Null sind!
 }
 

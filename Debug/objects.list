@@ -1,4 +1,5 @@
 "Core/Src/adc.o"
+"Core/Src/adc2.o"
 "Core/Src/init.o"
 "Core/Src/main.o"
 "Core/Src/processing.o"

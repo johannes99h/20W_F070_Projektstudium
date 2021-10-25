@@ -32,9 +32,10 @@ uint8_t adcChannels;
 
 /* Deklaration der Funktionen ---------------------------------------------------------*/
 
-void 	TxUART();
+void 	TxUART(uint8_t adcChannels, uint8_t *tempC);
+void 	singleTempTxUART(uint8_t ntcNumber, uint8_t *tempC);
 void 	TempTxUART(uint16_t bufferTxSize, uint8_t *tempC, uint8_t adcChannels);
-void 	ntcNumberTxUART(uint8_t adcChannels);
+void 	ntcNumberTxUART(uint8_t ntcNumber);
 int 	blankTxUART();
 int	 	CRCTxUART(uint32_t tempCRC);
 
