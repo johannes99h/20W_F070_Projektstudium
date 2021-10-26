@@ -69,9 +69,11 @@ uint8_t GetTempCfromLUT(const uint16_t *LUT, uint16_t ntcResistance)
  * 	@ret	CRC
  */
 
-uint32_t generateCRC32(uint8_t tempC)
+uint32_t generateCRC32(uint8_t tempC, uint8_t adcChannel)
 {
-	// CRC-Berechnung
+	uint32_t CRCtempC = 0;
 
-	return 0;
+	CRCtempC = HAL_CRC_Calculate(&hcrc, (uint32_t *)tempC, adcChannel);
+
+	return CRCtempC;
 }

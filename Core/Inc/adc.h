@@ -14,19 +14,19 @@
 extern ADC_HandleTypeDef hadc;
 extern DMA_HandleTypeDef hdma_adc;
 
-#define adcChannel 9
-#define buffLength 45
+#define channelAdc 	9
+#define buffLength	45
 
 /*
  * 		Deklarationen
  */
 
-uint8_t adcSamples;
+const uint8_t adcSamples;
 uint16_t adcBuffer[buffLength];
 uint16_t adcVal[buffLength];
-uint16_t adcBufferMeanValue[adcChannel];
-uint16_t adcVoltage[adcChannel];
-uint16_t ntcResistance[adcChannel];
+uint16_t adcBufferMeanValue[channelAdc];
+uint16_t adcVoltage[channelAdc];
+uint16_t ntcResistance[channelAdc];
 
 /*
  * 		Funktionsdeklarationen

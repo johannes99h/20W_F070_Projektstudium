@@ -1,10 +1,3 @@
-/*
- * transmission.h
- *
- *  Created on: Jul 6, 2021
- *      Author: johan
- */
-
 #ifndef INC_TRANSMISSION_H_
 #define INC_TRANSMISSION_H_
 
@@ -33,10 +26,10 @@ uint8_t howmany;
 
 /* Deklaration der Funktionen ---------------------------------------------------------*/
 
-void 	TxUART(uint8_t adcChannels, uint8_t *tempC);
+void 	TxUART(uint8_t adcChannels, uint8_t *tempC, uint32_t *CRCtempC);
 void 	singleTempTxUART(uint8_t ntcNumber, uint8_t *transmitTemp);
 void 	ntcNumberTxUART(uint8_t ntcNumber);
 void 	blankTxUART(uint8_t howmany);
-int	 	CRCTxUART(uint32_t tempCRC);
+void 	CRCTxUART(uint8_t ntcNumber, uint32_t *CRCtempC);
 
 #endif /* INC_TRANSMISSION_H_ */

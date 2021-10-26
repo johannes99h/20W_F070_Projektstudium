@@ -11,7 +11,7 @@
  * 		Definition der Variablen
  */
 
-uint16_t ntcResistance25[adcChannel] =	{	10000,
+uint16_t ntcResistance25[channelAdc] =	{	10000,
 											10000,
 											10000,
 											10000,
@@ -21,7 +21,7 @@ uint16_t ntcResistance25[adcChannel] =	{	10000,
 											10000,
 											10000
 										};
-uint8_t adcSamples = 5;								// erfüllt den gleichen Zweck wie buff_length -> zsm.führen
+const uint8_t adcSamples = 5;								// erfüllt den gleichen Zweck wie buff_length -> zsm.führen
 
 /*
  * 		Funktionsdefinitionen
@@ -29,7 +29,7 @@ uint8_t adcSamples = 5;								// erfüllt den gleichen Zweck wie buff_length ->
 
 uint16_t *ClearADCBuffer(uint16_t *adcBuffer)
 {
-	for(int i = 0; i < (adcChannel * adcSamples); i++)
+	for(int i = 0; i < (channelAdc * adcSamples); i++)
 	{
 		// Übertragung des Werts vom Buffer auf ein weiteres Array
 		adcVal[i] = adcBuffer[i];
@@ -47,9 +47,9 @@ uint16_t *GetADCMeanValue(uint16_t *adcVal, uint8_t adcSamples)
 	int k = 0;
 
 	// Aufaddieren der Samples pro Channel
-	for(int i = 0; i < adcChannel; i++)
+	for(int i = 0; i < channelAdc; i++)
 	{
-		for(int i = 0; i < adcChannel; i++)
+		for(int i = 0; i < channelAdc; i++)
 		{
 			for(int j = 0; j < adcSamples; j++)
 			{
@@ -70,13 +70,13 @@ uint16_t *GetADCMeanValue(uint16_t *adcVal, uint8_t adcSamples)
 uint16_t *GetADCResistance(uint16_t *adcBufferMeanValue)
 {
 	// Berechnung der Spannung an den NTCs
-	for(int i = 0; i < adcChannel; i++)
+	for(int i = 0; i < channelAdc; i++)
 	{
 		adcVoltage[i] = 33 * (adcBufferMeanValue[i] * 10) / 4095;
 	}
 
 	// Berechnung der einzelnen NTC-Widerstände
-	for(int i = 0; i < adcChannel; i++)
+	for(int i = 0; i < channelAdc; i++)
 	{
 		ntcResistance[i] = (adcVoltage[i] * ntcResistance25[i]) / (330 - adcVoltage[i]);
 	}

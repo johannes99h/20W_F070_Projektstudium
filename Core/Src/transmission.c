@@ -1,10 +1,3 @@
-/*
- * transmission.c
- *
- *  Created on: Jul 6, 2021
- *      Author: johan
- */
-
 #include "transmission.h"
 
 /* Definition der Variablen ---------------------------------------------------------*/
@@ -20,12 +13,9 @@ uint8_t howmany; 				// Anzahl der Sternchen!
  * 		***** NTC1 * 25°C * CRC1 ** NTC2 * 30°C * CRC2 ** ... **********
  */
 
-void TxUART(uint8_t adcChannels, uint8_t *tempC)						// Parallelisierung mit Berechnung wäre irgendwie sinnvoll... -> was hab ich damit gemeint?
+void TxUART(uint8_t adcChannels, uint8_t *tempC, uint32_t *CRCtempC)
 {
 	uint8_t ntcNumber = 0;
-
-	// HAL_UART_DMAPause(&huart1);
-	// HAL_UART_DMAStop(&huart1);
 
 	// "Header" -> sollte von auswertender Software erkannt werden
 	blankTxUART(5);
@@ -38,24 +28,19 @@ void TxUART(uint8_t adcChannels, uint8_t *tempC)						// Parallelisierung mit Be
 		blankTxUART(1);
 		singleTempTxUART(ntcNumber, tempC);
 		blankTxUART(1);
-		// CRCTxUART(tempCRC);										// Fkt. noch nicht geschrieben
+		CRCTxUART(ntcNumber, CRCtempC);						// wirklich als Pointer?
 		blankTxUART(2);
 	}
 
 	// "Tail" -> sollte von auswertender Software erkannt werden (Möglichkeit, eine Plausibilitätskontrolle durch Zählen der Temp.s oder so, einzubauen
 	blankTxUART(10);
-
-
-	// uint8_t placeholder[1] = "_";
-	// HAL_UART_Transmit_DMA(&huart1, placeholder, sizeof(placeholder));
-	// HAL_UART_DMAResume(&huart1);
 }
 
 
 void singleTempTxUART(uint8_t ntcNumber, uint8_t *tempC)
 {
 	uint8_t bufferTempSize;
-	char bufferTemp[3];																	// da Temp. max. dreistellig
+	char bufferTemp[3];
 
 	bufferTempSize = sprintf(bufferTemp, "%d", tempC[ntcNumber]);
 
@@ -64,8 +49,8 @@ void singleTempTxUART(uint8_t ntcNumber, uint8_t *tempC)
 
 
 /*
- * 	@brief	Übertragung der Nummer des zugehörigen NTCs 								-> auf Empfängerseite benennen!
- * 	@param	Pointer zum Array, der NTC-Nummern 											-> eigentlich überflüssig...
+ * 	@brief	Übertragung der Nummer des zugehörigen NTCs
+ * 	@param	Nummer des NTCs
  */
 
 void ntcNumberTxUART(uint8_t ntcNumber)
@@ -82,8 +67,8 @@ void ntcNumberTxUART(uint8_t ntcNumber)
 
 
 /*
- * 	@brief "UART-Zwischenframe"
- * 	@param	ASCII-codiertes Zeichen														-> auf Empfängerseite als "Stop" erkennen
+ * 	@brief "Zwischenframe", Häufigkeit des Vorkommens ermöglicht Schluss auf Fortschritt der Nachricht
+ * 	@param	Anzahl der Zwischenframes (Stern in ASCII-Codierung)
  */
 
 void blankTxUART(uint8_t howmany)
@@ -97,20 +82,19 @@ void blankTxUART(uint8_t howmany)
 }
 
 /*
- * 	@brief "UART-Zwischenframe"
- * 	@param	ASCII-codiertes Zeichen														-> auf Empfängerseite als "Stop" erkennen
+ * 	@brief 	CRC-Frame für je eine NTC-Temperatur
+ * 	@param	Nummer des entsprechenden NTCs (ganzes Array wird übergeben)
+ * 	@param	Array mit generierten CRC-Werten
  */
 
-int CRCTxUART(uint32_t tempCRC)
+void CRCTxUART(uint8_t ntcNumber, uint32_t *CRCtempC)
 {
 	uint8_t bufferCrcSize;
 	char bufferCrc[8];
 
-	bufferCrcSize = sprintf(bufferCrc, "%ld", tempCRC);
+	bufferCrcSize = sprintf(bufferCrc, "%ld", CRCtempC[ntcNumber]);
 
 	HAL_UART_Transmit(&huart1, (uint8_t *)bufferCrc, bufferCrcSize, 10);
-
-	return 0;
 }
 
 
