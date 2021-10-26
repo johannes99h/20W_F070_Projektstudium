@@ -24,13 +24,10 @@ void TxUART(uint8_t adcChannels, uint8_t *tempC)						// Parallelisierung mit Be
 {
 	uint8_t ntcNumber = 0;
 
-	/* "Header" -> sollte von auswertender Software erkannt werden
-	for(int i = 0; i < 5; i++)
-	{
-		blankTxUART();
-	}
-	*/
+	// HAL_UART_DMAPause(&huart1);
+	// HAL_UART_DMAStop(&huart1);
 
+	// "Header" -> sollte von auswertender Software erkannt werden
 	blankTxUART(5);
 
 	for(int j = 0; j < adcChannels; j++)
@@ -47,6 +44,11 @@ void TxUART(uint8_t adcChannels, uint8_t *tempC)						// Parallelisierung mit Be
 
 	// "Tail" -> sollte von auswertender Software erkannt werden (Möglichkeit, eine Plausibilitätskontrolle durch Zählen der Temp.s oder so, einzubauen
 	blankTxUART(10);
+
+
+	// uint8_t placeholder[1] = "_";
+	// HAL_UART_Transmit_DMA(&huart1, placeholder, sizeof(placeholder));
+	// HAL_UART_DMAResume(&huart1);
 }
 
 
@@ -86,7 +88,7 @@ void ntcNumberTxUART(uint8_t ntcNumber)
 
 void blankTxUART(uint8_t howmany)
 {
-	uint8_t divider[1] = "*";				// sehe (gerade) keinen Grund für eine globale Variable
+	uint8_t divider[1] = "*";
 
 	for(int i = 0; i < howmany; i++)
 	{
