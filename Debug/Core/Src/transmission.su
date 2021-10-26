@@ -1,6 +1,5 @@
-transmission.c:22:6:TxUART	48	static
-transmission.c:54:6:singleTempTxUART	24	static
-transmission.c:68:6:TempTxUART	24	static
-transmission.c:89:6:ntcNumberTxUART	16	static
-transmission.c:101:5:blankTxUART	16	static
-transmission.c:115:5:CRCTxUART	16	static
+transmission.c:23:6:TxUART	32	static
+transmission.c:53:6:singleTempTxUART	32	static
+transmission.c:69:6:ntcNumberTxUART	32	static
+transmission.c:87:6:blankTxUART	24	static
+transmission.c:102:5:CRCTxUART	40	static

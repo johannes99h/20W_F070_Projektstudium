@@ -440,12 +440,10 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
 
 	GetADCResistance(adcBufferMeanValue);
 
-	for(int i = 0; i < adcChannel; i++)
+	for(int i = 0; i < adcChannel; i++)			// auch noch in eine Funktion packen, um hier nur noch den Call stehen zu haben
 	{
 		tempC[i] = GetTempCfromLUT(LUT, ntcResistance[i]);
 	}
-
-	TempTxUART(bufferTxSize, tempC, adcChannels);
 
 	// for(int i = 0; i < adcChannels; i++)
 	// {
@@ -453,9 +451,16 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
 	// 	HAL_UART_Transmit(&huart1, (uint8_t *) bufferTx, bufferTxSize, 10);
 	// }
 
+	// einfaches Beispiel, sollte immer funktionieren
 	// uint8_t test[4] = "Test";
-
 	// HAL_UART_Transmit(&huart1, test, sizeof(test), 10);
+
+	// "alte" Lösung, überträgt nichts außer den Temperaturen
+	// TempTxUART(bufferTxSize, tempC, adcChannels);
+
+	// "neue" Lösung, u.a. einzelner Aufruf der Temperaturübertragung
+	TxUART(adcChannel, tempC);
+
 }
 
 

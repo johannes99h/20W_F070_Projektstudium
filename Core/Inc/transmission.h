@@ -29,14 +29,14 @@ uint16_t bufferTxSize;
 uint8_t divider[1];
 uint32_t tempCRC;
 uint8_t adcChannels;
+uint8_t howmany;
 
 /* Deklaration der Funktionen ---------------------------------------------------------*/
 
 void 	TxUART(uint8_t adcChannels, uint8_t *tempC);
-void 	singleTempTxUART(uint8_t ntcNumber, uint8_t *tempC);
-void 	TempTxUART(uint16_t bufferTxSize, uint8_t *tempC, uint8_t adcChannels);
+void 	singleTempTxUART(uint8_t ntcNumber, uint8_t *transmitTemp);
 void 	ntcNumberTxUART(uint8_t ntcNumber);
-int 	blankTxUART();
+void 	blankTxUART(uint8_t howmany);
 int	 	CRCTxUART(uint32_t tempCRC);
 
 #endif /* INC_TRANSMISSION_H_ */

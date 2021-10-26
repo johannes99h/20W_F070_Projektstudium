@@ -7,4 +7,4 @@ main.c:369:13:MX_USART1_UART_Init	8	static
 main.c:404:13:MX_DMA_Init	16	static
 main.c:425:13:MX_GPIO_Init	16	static
 main.c:435:6:HAL_ADC_ConvCpltCallback	24	static
-main.c:468:6:Error_Handler	8	static,ignoring_inline_asm
+main.c:473:6:Error_Handler	8	static,ignoring_inline_asm
