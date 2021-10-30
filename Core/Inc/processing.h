@@ -17,11 +17,13 @@ extern CRC_HandleTypeDef hcrc;
 
 const 	uint16_t LUT[151];
 		uint32_t tempCRC;
+		uint16_t checksum[3];
 
 
 /* Deklaration der Funktionen ---------------------------------------------------------*/
 
 uint8_t 	GetTempCfromLUT(const uint16_t *LUT, uint16_t ntcResistance);
+uint16_t 	*generateChecksum(uint16_t *checksum, uint8_t *tempC, uint8_t adcChannel);
 uint32_t 	generateCRC32(uint8_t tempC, uint8_t adcChannel);
 
 

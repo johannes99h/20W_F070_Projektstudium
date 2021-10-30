@@ -1,15 +1,8 @@
-/*
- * processing.c
- *
- *  Created on: Jul 6, 2021
- *      Author: johan
- */
-
 #include "processing.h"
 
 /* Definition der Variablen ---------------------------------------------------------*/
-// mit Näherungsformel berechnete Widerstandswerte in 1-Grad-Schritten für Murata NXFT15XH103-NTCs
-const 	uint16_t LUT[151] = {
+
+const 	uint16_t LUT[151] = {		// mit Näherungsformel berechnete Widerstandswerte in 1-Grad-Schritten für Murata NXFT15XH103-NTCs
 									28224, 	26978, 	25796, 	24674, 	23608, 	22595, 	21632, 	20717, 	19847, 	19019,
 									18231, 	17481, 	16767, 	16087, 	15438, 	14820, 	14231, 	13669, 	13133, 	12622,
 									12133, 	11667, 	11221, 	10796, 	10389, 	10000, 	9628, 	9272, 	8932, 	8606,
@@ -26,9 +19,8 @@ const 	uint16_t LUT[151] = {
 									522,	511,	501,	491,	481,	471,	462,	452,	443,	435,
 									426,	418,	410,	402,	394,	386,	379,	372,	365,	358,
 									351
-								};
-
-		uint32_t tempCRC = 0;
+							};
+		uint16_t checksum[3] = { 0 };
 
 
 /* Definition der Funktionen ---------------------------------------------------------*/
@@ -45,11 +37,13 @@ uint8_t GetTempCfromLUT(const uint16_t *LUT, uint16_t ntcResistance)
 	int i = 0;
 	uint8_t tempC;
 
-	// Absuchen des Lookup-Tables, effizientere Variante möglich! (in der Mitte starten & vergleichen?)
+	// alte Variante, vmtl. relativ ineffizient
 	while(ntcResistance < LUT[i])
 	{
 		i++;
 	}
+
+	// noch besser, die alte Temperatur als Ausgangspunkt zu merken?
 
 	// Temperaturzuweisung
 	tempC = i;
@@ -76,4 +70,17 @@ uint32_t generateCRC32(uint8_t tempC, uint8_t adcChannel)
 	CRCtempC = HAL_CRC_Calculate(&hcrc, (uint32_t *)tempC, adcChannel);
 
 	return CRCtempC;
+}
+
+
+/*
+ * 	@brief	Berechnung der Quersumme aus den Temperaturwerten von jeweils immer drei NTCs
+ * 	@param	Temperatur-Array
+ * 	@param	Channel-Anzahl
+ * 	@ret	Array mit berechneten Quersummen
+ */
+
+uint16_t *generateChecksum(uint16_t *checksum, uint8_t *tempC, uint8_t adcChannel)
+{
+	return checksum;
 }
