@@ -37,7 +37,6 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define adcChannel 9
 #define buffLength 45
 
 /* USER CODE END PD */
@@ -60,10 +59,6 @@ UART_HandleTypeDef huart1;
 DMA_HandleTypeDef hdma_usart1_tx;
 
 /* USER CODE BEGIN PV */
-char bufferTx[25];
-
-uint16_t bufferTxSize;																		// wirklich noch notwendig?
-
 
 /* USER CODE END PV */
 
@@ -468,11 +463,6 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
-{
-	scheduler();
-}
-
 
 /* USER CODE END 4 */
 

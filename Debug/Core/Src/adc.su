@@ -1,4 +1,5 @@
-adc.c:32:6:scheduler	16	static
-adc.c:54:11:ClearADCBuffer	24	static
-adc.c:69:11:GetADCMeanValue	32	static
-adc.c:94:11:GetADCResistance	24	static
+adc.c:31:6:HAL_ADC_ConvCpltCallback	16	static
+adc.c:36:6:scheduler	16	static
+adc.c:58:11:ClearADCBuffer	24	static
+adc.c:73:11:GetADCMeanValue	32	static
+adc.c:98:11:GetADCResistance	24	static

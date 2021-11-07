@@ -11,7 +11,7 @@
  * 		Definition der Variablen
  */
 
-		uint16_t 	ntcResistance25[channelAdc] =	{	10000,
+		uint16_t 	ntcResistance25[adcChannel] =	{	10000,
 														10000,
 														10000,
 														10000,
@@ -22,12 +22,16 @@
 														10000
 													};
 const 	uint8_t 	adcSamples = 5;								// erfüllt den gleichen Zweck wie buff_length -> zsm.führen
-		uint8_t 	tempC[channelAdc] = { 0 };
-		uint32_t 	CRCtempC[channelAdc] = { 0 };
+		uint8_t 	tempC[adcChannel] = { 0 };
+		uint32_t 	CRCtempC[adcChannel] = { 0 };
 
 /*
  * 		Funktionsdefinitionen
  */
+void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
+{
+	scheduler();
+}
 
 void scheduler()
 {
@@ -37,23 +41,23 @@ void scheduler()
 
 	GetADCResistance(adcBufferMeanValue);
 
-	for(int i = 0; i < channelAdc; i++)			// auch noch in eine Funktion packen, um hier nur noch den Call stehen zu haben
+	for(int i = 0; i < adcChannel; i++)			// auch noch in eine Funktion packen, um hier nur noch den Call stehen zu haben
 	{
 		tempC[i] = GetTempCfromLUT(LUT, ntcResistance[i]);
 	}
 
-	for(int i = 0; i < channelAdc; i++)			// auch noch in eine Funktion packen, um hier nur noch den Call stehen zu haben
+	for(int i = 0; i < adcChannel; i++)			// auch noch in eine Funktion packen, um hier nur noch den Call stehen zu haben
 	{
-		CRCtempC[i] = generateCRC32(tempC[i], channelAdc);
+		CRCtempC[i] = generateCRC32(tempC[i], adcChannel);
 	}
 
-	TxUART(channelAdc, tempC, CRCtempC);		// später auch CRCtempC übergeben
+	TxUART(adcChannel, tempC, CRCtempC);		// später auch CRCtempC übergeben
 }
 
 
 uint16_t *ClearADCBuffer(uint16_t *adcBuffer)
 {
-	for(int i = 0; i < (channelAdc * adcSamples); i++)
+	for(int i = 0; i < (adcChannel * adcSamples); i++)
 	{
 		// Übertragung des Werts vom Buffer auf ein weiteres Array
 		adcVal[i] = adcBuffer[i];
@@ -71,9 +75,9 @@ uint16_t *GetADCMeanValue(uint16_t *adcVal, uint8_t adcSamples)
 	int k = 0;
 
 	// Aufaddieren der Samples pro Channel
-	for(int i = 0; i < channelAdc; i++)
+	for(int i = 0; i < adcChannel; i++)
 	{
-		for(int i = 0; i < channelAdc; i++)
+		for(int i = 0; i < adcChannel; i++)
 		{
 			for(int j = 0; j < adcSamples; j++)
 			{
@@ -94,13 +98,13 @@ uint16_t *GetADCMeanValue(uint16_t *adcVal, uint8_t adcSamples)
 uint16_t *GetADCResistance(uint16_t *adcBufferMeanValue)
 {
 	// Berechnung der Spannung an den NTCs
-	for(int i = 0; i < channelAdc; i++)
+	for(int i = 0; i < adcChannel; i++)
 	{
 		adcVoltage[i] = 33 * (adcBufferMeanValue[i] * 10) / 4095;
 	}
 
 	// Berechnung der einzelnen NTC-Widerstände
-	for(int i = 0; i < channelAdc; i++)
+	for(int i = 0; i < adcChannel; i++)
 	{
 		ntcResistance[i] = (adcVoltage[i] * ntcResistance25[i]) / (330 - adcVoltage[i]);
 	}
