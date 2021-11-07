@@ -23,7 +23,6 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "stdio.h"
-
 #include "adc.h"
 #include "init.h"
 #include "processing.h"
@@ -63,9 +62,8 @@ DMA_HandleTypeDef hdma_usart1_tx;
 /* USER CODE BEGIN PV */
 char bufferTx[25];
 
-uint8_t tempC[adcChannel];
 uint16_t bufferTxSize;																		// wirklich noch notwendig?
-uint32_t CRCtempC[adcChannel];
+
 
 /* USER CODE END PV */
 
@@ -472,20 +470,7 @@ static void MX_GPIO_Init(void)
 /* USER CODE BEGIN 4 */
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
 {
-	ClearADCBuffer(adcBuffer);
-
-	GetADCMeanValue(adcVal, 5);
-
-	GetADCResistance(adcBufferMeanValue);
-
-	for(int i = 0; i < adcChannel; i++)			// auch noch in eine Funktion packen, um hier nur noch den Call stehen zu haben
-	{
-		tempC[i] = GetTempCfromLUT(LUT, ntcResistance[i]);
-		CRCtempC[i] = generateCRC32(tempC[i], adcChannel);
-	}
-
-	TxUART(adcChannel, tempC, CRCtempC);		// später auch CRCtempC übergeben
-
+	scheduler();
 }
 
 

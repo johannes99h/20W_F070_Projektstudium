@@ -11,21 +11,45 @@
  * 		Definition der Variablen
  */
 
-uint16_t ntcResistance25[channelAdc] =	{	10000,
-											10000,
-											10000,
-											10000,
-											10000,
-											10000,
-											10000,
-											10000,
-											10000
-										};
-const uint8_t adcSamples = 5;								// erfüllt den gleichen Zweck wie buff_length -> zsm.führen
+		uint16_t 	ntcResistance25[channelAdc] =	{	10000,
+														10000,
+														10000,
+														10000,
+														10000,
+														10000,
+														10000,
+														10000,
+														10000
+													};
+const 	uint8_t 	adcSamples = 5;								// erfüllt den gleichen Zweck wie buff_length -> zsm.führen
+		uint8_t 	tempC[channelAdc] = { 0 };
+		uint32_t 	CRCtempC[channelAdc] = { 0 };
 
 /*
  * 		Funktionsdefinitionen
  */
+
+void scheduler()
+{
+	ClearADCBuffer(adcBuffer);
+
+	GetADCMeanValue(adcVal, 5);
+
+	GetADCResistance(adcBufferMeanValue);
+
+	for(int i = 0; i < channelAdc; i++)			// auch noch in eine Funktion packen, um hier nur noch den Call stehen zu haben
+	{
+		tempC[i] = GetTempCfromLUT(LUT, ntcResistance[i]);
+	}
+
+	for(int i = 0; i < channelAdc; i++)			// auch noch in eine Funktion packen, um hier nur noch den Call stehen zu haben
+	{
+		CRCtempC[i] = generateCRC32(tempC[i], channelAdc);
+	}
+
+	TxUART(channelAdc, tempC, CRCtempC);		// später auch CRCtempC übergeben
+}
+
 
 uint16_t *ClearADCBuffer(uint16_t *adcBuffer)
 {
