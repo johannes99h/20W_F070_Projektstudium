@@ -14,15 +14,10 @@ extern DMA_HandleTypeDef hdma_usart1_tx;
 
 /* Deklaration der Variablen ---------------------------------------------------------*/
 
-// alt
-char bufferTx[25];				// char nicht unbed. nötig, auch mit uint8_t-Array lösbar -> stdio.h nicht notwendig
-uint16_t bufferTxSize;
-
-// neu
-uint8_t divider[1];
-uint32_t tempCRC;
-uint8_t adcChannels;
-uint8_t howmany;
+uint8_t 	divider[1];
+uint8_t 	adcChannels;
+uint8_t 	howmany;
+uint32_t 	tempCRC;
 
 /* Deklaration der Funktionen ---------------------------------------------------------*/
 

@@ -14,8 +14,8 @@
 #include "processing.h"
 #include "transmission.h"
 
-extern ADC_HandleTypeDef hadc;
-extern DMA_HandleTypeDef hdma_adc;
+extern 	ADC_HandleTypeDef hadc;
+extern 	DMA_HandleTypeDef hdma_adc;
 
 #define adcChannel 	9
 #define buffLength	45

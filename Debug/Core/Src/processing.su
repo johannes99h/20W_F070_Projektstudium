@@ -1,3 +1,3 @@
-processing.c:35:9:GetTempCfromLUT	24	static
-processing.c:66:10:generateCRC32	24	static
-processing.c:83:11:generateChecksum	24	static
+processing.c:36:9:GetTempCfromLUT	24	static
+processing.c:67:10:generateCRC32	24	static
+processing.c:84:11:generateChecksum	24	static

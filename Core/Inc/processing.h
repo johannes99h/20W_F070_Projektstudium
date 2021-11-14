@@ -11,7 +11,7 @@
 #include "stdint.h"
 #include "stm32f0xx_hal.h"
 
-extern CRC_HandleTypeDef hcrc;
+extern 	CRC_HandleTypeDef hcrc;
 
 /* Deklaration der Variablen ---------------------------------------------------------*/
 

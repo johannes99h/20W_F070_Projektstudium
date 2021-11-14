@@ -21,29 +21,29 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, ALLOC, LOAD, DATA
   8 .data         00000084  20000000  080046d4  00020000  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  9 .bss          00000380  20000084  08004758  00020084  2**2
+  9 .bss          00000360  20000084  08004758  00020084  2**2
                   ALLOC
- 10 ._user_heap_stack 00000604  20000404  08004758  00020404  2**0
+ 10 ._user_heap_stack 00000604  200003e4  08004758  000203e4  2**0
                   ALLOC
  11 .ARM.attributes 00000028  00000000  00000000  00020084  2**0
                   CONTENTS, READONLY
- 12 .debug_info   000101e3  00000000  00000000  000200ac  2**0
+ 12 .debug_info   00010147  00000000  00000000  000200ac  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 13 .debug_abbrev 00002738  00000000  00000000  0003028f  2**0
+ 13 .debug_abbrev 00002738  00000000  00000000  000301f3  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_aranges 00000e00  00000000  00000000  000329c8  2**3
+ 14 .debug_aranges 00000e00  00000000  00000000  00032930  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_ranges 00000cf8  00000000  00000000  000337c8  2**3
+ 15 .debug_ranges 00000cf8  00000000  00000000  00033730  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_macro  00012142  00000000  00000000  000344c0  2**0
+ 16 .debug_macro  0001213c  00000000  00000000  00034428  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_line   000111f9  00000000  00000000  00046602  2**0
+ 17 .debug_line   000111f9  00000000  00000000  00046564  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    0006994f  00000000  00000000  000577fb  2**0
+ 18 .debug_str    00069939  00000000  00000000  0005775d  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000053  00000000  00000000  000c114a  2**0
+ 19 .comment      00000053  00000000  00000000  000c1096  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  00003524  00000000  00000000  000c11a0  2**2
+ 20 .debug_frame  00003524  00000000  00000000  000c10ec  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -588,7 +588,7 @@ void scheduler()
  80004ac:	bd80      	pop	{r7, pc}
  80004ae:	46c0      	nop			; (mov r8, r8)
  80004b0:	200000dc 	.word	0x200000dc
- 80004b4:	20000168 	.word	0x20000168
+ 80004b4:	20000164 	.word	0x20000164
  80004b8:	20000138 	.word	0x20000138
  80004bc:	2000014c 	.word	0x2000014c
  80004c0:	08004550 	.word	0x08004550
@@ -650,7 +650,7 @@ uint16_t *ClearADCBuffer(uint16_t *adcBuffer)
  8000512:	46bd      	mov	sp, r7
  8000514:	b004      	add	sp, #16
  8000516:	bd80      	pop	{r7, pc}
- 8000518:	20000168 	.word	0x20000168
+ 8000518:	20000164 	.word	0x20000164
 
 0800051c <GetADCMeanValue>:
 
@@ -857,7 +857,7 @@ uint16_t *GetADCResistance(uint16_t *adcBufferMeanValue)
  8000650:	bd80      	pop	{r7, pc}
  8000652:	46c0      	nop			; (mov r8, r8)
  8000654:	00000fff 	.word	0x00000fff
- 8000658:	200001c8 	.word	0x200001c8
+ 8000658:	200001c4 	.word	0x200001c4
  800065c:	20000000 	.word	0x20000000
  8000660:	2000014c 	.word	0x2000014c
 
@@ -923,8 +923,8 @@ int main(void)
  80006a0:	e7fe      	b.n	80006a0 <main+0x3c>
  80006a2:	46c0      	nop			; (mov r8, r8)
  80006a4:	200000dc 	.word	0x200000dc
- 80006a8:	200003b0 	.word	0x200003b0
- 80006ac:	200002dc 	.word	0x200002dc
+ 80006a8:	20000390 	.word	0x20000390
+ 80006ac:	200002bc 	.word	0x200002bc
 
 080006b0 <SystemClock_Config>:
 /**
@@ -1345,7 +1345,7 @@ static void MX_ADC_Init(void)
  80008fa:	46bd      	mov	sp, r7
  80008fc:	b004      	add	sp, #16
  80008fe:	bd80      	pop	{r7, pc}
- 8000900:	200003b0 	.word	0x200003b0
+ 8000900:	20000390 	.word	0x20000390
  8000904:	40012400 	.word	0x40012400
 
 08000908 <MX_CRC_Init>:
@@ -1400,7 +1400,7 @@ static void MX_CRC_Init(void)
  800093a:	46c0      	nop			; (mov r8, r8)
  800093c:	46bd      	mov	sp, r7
  800093e:	bd80      	pop	{r7, pc}
- 8000940:	200001f8 	.word	0x200001f8
+ 8000940:	200001d8 	.word	0x200001d8
  8000944:	40023000 	.word	0x40023000
 
 08000948 <MX_TIM1_Init>:
@@ -1522,7 +1522,7 @@ static void MX_TIM1_Init(void)
  80009e6:	46bd      	mov	sp, r7
  80009e8:	b006      	add	sp, #24
  80009ea:	bd80      	pop	{r7, pc}
- 80009ec:	200002dc 	.word	0x200002dc
+ 80009ec:	200002bc 	.word	0x200002bc
  80009f0:	40012c00 	.word	0x40012c00
  80009f4:	000003e7 	.word	0x000003e7
  80009f8:	000012bf 	.word	0x000012bf
@@ -1584,7 +1584,7 @@ static void MX_TIM14_Init(void)
  8000a36:	46bd      	mov	sp, r7
  8000a38:	bd80      	pop	{r7, pc}
  8000a3a:	46c0      	nop			; (mov r8, r8)
- 8000a3c:	20000324 	.word	0x20000324
+ 8000a3c:	20000304 	.word	0x20000304
  8000a40:	40002000 	.word	0x40002000
  8000a44:	000003e7 	.word	0x000003e7
  8000a48:	000012bf 	.word	0x000012bf
@@ -1674,7 +1674,7 @@ static void MX_USART1_UART_Init(void)
  8000ab2:	46bd      	mov	sp, r7
  8000ab4:	bd80      	pop	{r7, pc}
  8000ab6:	46c0      	nop			; (mov r8, r8)
- 8000ab8:	20000258 	.word	0x20000258
+ 8000ab8:	20000238 	.word	0x20000238
  8000abc:	40013800 	.word	0x40013800
 
 08000ac0 <MX_DMA_Init>:
@@ -1918,7 +1918,7 @@ uint32_t generateCRC32(uint8_t tempC, uint8_t adcChannel)
  8000be6:	b004      	add	sp, #16
  8000be8:	bd80      	pop	{r7, pc}
  8000bea:	46c0      	nop			; (mov r8, r8)
- 8000bec:	200001f8 	.word	0x200001f8
+ 8000bec:	200001d8 	.word	0x200001d8
 
 08000bf0 <HAL_MspInit>:
 /* USER CODE END 0 */
@@ -2165,7 +2165,7 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* hadc)
  8000d48:	40012400 	.word	0x40012400
  8000d4c:	40021000 	.word	0x40021000
  8000d50:	48000400 	.word	0x48000400
- 8000d54:	2000036c 	.word	0x2000036c
+ 8000d54:	2000034c 	.word	0x2000034c
  8000d58:	40020008 	.word	0x40020008
 
 08000d5c <HAL_CRC_MspInit>:
@@ -2452,7 +2452,7 @@ void HAL_UART_MspInit(UART_HandleTypeDef* huart)
  8000ee2:	46c0      	nop			; (mov r8, r8)
  8000ee4:	40013800 	.word	0x40013800
  8000ee8:	40021000 	.word	0x40021000
- 8000eec:	20000214 	.word	0x20000214
+ 8000eec:	200001f4 	.word	0x200001f4
  8000ef0:	4002001c 	.word	0x4002001c
 
 08000ef4 <NMI_Handler>:
@@ -2571,7 +2571,7 @@ void DMA1_Channel1_IRQHandler(void)
  8000f32:	46bd      	mov	sp, r7
  8000f34:	bd80      	pop	{r7, pc}
  8000f36:	46c0      	nop			; (mov r8, r8)
- 8000f38:	2000036c 	.word	0x2000036c
+ 8000f38:	2000034c 	.word	0x2000034c
 
 08000f3c <DMA1_Channel2_3_IRQHandler>:
 
@@ -2597,7 +2597,7 @@ void DMA1_Channel2_3_IRQHandler(void)
  8000f4a:	46bd      	mov	sp, r7
  8000f4c:	bd80      	pop	{r7, pc}
  8000f4e:	46c0      	nop			; (mov r8, r8)
- 8000f50:	20000214 	.word	0x20000214
+ 8000f50:	200001f4 	.word	0x200001f4
 
 08000f54 <_sbrk>:
  *
@@ -2679,7 +2679,7 @@ void *_sbrk(ptrdiff_t incr)
  8000fb0:	20001800 	.word	0x20001800
  8000fb4:	00000400 	.word	0x00000400
  8000fb8:	200000d0 	.word	0x200000d0
- 8000fbc:	20000408 	.word	0x20000408
+ 8000fbc:	200003e8 	.word	0x200003e8
 
 08000fc0 <SystemInit>:
   * @brief  Setup the microcontroller system
@@ -2835,7 +2835,7 @@ void singleTempTxUART(uint8_t ntcNumber, uint8_t *tempC)
  8001094:	bd90      	pop	{r4, r7, pc}
  8001096:	46c0      	nop			; (mov r8, r8)
  8001098:	0800451c 	.word	0x0800451c
- 800109c:	20000258 	.word	0x20000258
+ 800109c:	20000238 	.word	0x20000238
 
 080010a0 <ntcNumberTxUART>:
  * 	@brief	Übertragung der Nummer des zugehörigen NTCs
@@ -2882,7 +2882,7 @@ void ntcNumberTxUART(uint8_t ntcNumber)
  80010d8:	b005      	add	sp, #20
  80010da:	bd90      	pop	{r4, r7, pc}
  80010dc:	08004520 	.word	0x08004520
- 80010e0:	20000258 	.word	0x20000258
+ 80010e0:	20000238 	.word	0x20000238
 
 080010e4 <blankTxUART>:
  * 	@brief "Zwischenframe", Häufigkeit des Vorkommens ermöglicht Schluss auf Fortschritt der Nachricht
@@ -2933,7 +2933,7 @@ void blankTxUART(uint8_t howmany)
  8001124:	b004      	add	sp, #16
  8001126:	bd80      	pop	{r7, pc}
  8001128:	08004528 	.word	0x08004528
- 800112c:	20000258 	.word	0x20000258
+ 800112c:	20000238 	.word	0x20000238
 
 08001130 <CRCTxUART>:
  * 	@param	Nummer des entsprechenden NTCs (ganzes Array wird übergeben)
@@ -2984,7 +2984,7 @@ void CRCTxUART(uint8_t ntcNumber, uint32_t *CRCtempC)
  8001174:	bd90      	pop	{r4, r7, pc}
  8001176:	46c0      	nop			; (mov r8, r8)
  8001178:	0800452c 	.word	0x0800452c
- 800117c:	20000258 	.word	0x20000258
+ 800117c:	20000238 	.word	0x20000238
 
 08001180 <Reset_Handler>:
 
@@ -3128,7 +3128,7 @@ LoopForever:
   ldr r2, =_sbss
  80011f8:	20000084 	.word	0x20000084
   ldr r4, =_ebss
- 80011fc:	20000404 	.word	0x20000404
+ 80011fc:	200003e4 	.word	0x200003e4
 
 08001200 <ADC1_IRQHandler>:
  * @retval : None
@@ -3276,7 +3276,7 @@ __weak void HAL_IncTick(void)
  80012ac:	bd80      	pop	{r7, pc}
  80012ae:	46c0      	nop			; (mov r8, r8)
  80012b0:	2000001c 	.word	0x2000001c
- 80012b4:	200003f0 	.word	0x200003f0
+ 80012b4:	200003d0 	.word	0x200003d0
 
 080012b8 <HAL_GetTick>:
   * @note   This function is declared as __weak  to be overwritten  in case of other 
@@ -3295,7 +3295,7 @@ __weak uint32_t HAL_GetTick(void)
  80012c2:	46bd      	mov	sp, r7
  80012c4:	bd80      	pop	{r7, pc}
  80012c6:	46c0      	nop			; (mov r8, r8)
- 80012c8:	200003f0 	.word	0x200003f0
+ 80012c8:	200003d0 	.word	0x200003d0
 
 080012cc <HAL_ADC_Init>:
   *         of structure "ADC_InitTypeDef".
@@ -12212,7 +12212,7 @@ HAL_StatusTypeDef UART_WaitOnFlagUntilTimeout(UART_HandleTypeDef *huart, uint32_
  80044c6:	6023      	str	r3, [r4, #0]
  80044c8:	bd70      	pop	{r4, r5, r6, pc}
  80044ca:	46c0      	nop			; (mov r8, r8)
- 80044cc:	200003f4 	.word	0x200003f4
+ 80044cc:	200003d4 	.word	0x200003d4
 
 080044d0 <__malloc_lock>:
  80044d0:	b510      	push	{r4, lr}
@@ -12220,7 +12220,7 @@ HAL_StatusTypeDef UART_WaitOnFlagUntilTimeout(UART_HandleTypeDef *huart, uint32_
  80044d4:	f000 f814 	bl	8004500 <__retarget_lock_acquire_recursive>
  80044d8:	bd10      	pop	{r4, pc}
  80044da:	46c0      	nop			; (mov r8, r8)
- 80044dc:	200003fc 	.word	0x200003fc
+ 80044dc:	200003dc 	.word	0x200003dc
 
 080044e0 <__malloc_unlock>:
  80044e0:	b510      	push	{r4, lr}
@@ -12228,7 +12228,7 @@ HAL_StatusTypeDef UART_WaitOnFlagUntilTimeout(UART_HandleTypeDef *huart, uint32_
  80044e4:	f000 f80d 	bl	8004502 <__retarget_lock_release_recursive>
  80044e8:	bd10      	pop	{r4, pc}
  80044ea:	46c0      	nop			; (mov r8, r8)
- 80044ec:	200003fc 	.word	0x200003fc
+ 80044ec:	200003dc 	.word	0x200003dc
 
 080044f0 <_malloc_usable_size_r>:
  80044f0:	1f0b      	subs	r3, r1, #4

@@ -20,6 +20,7 @@ const 	uint16_t LUT[151] = {		// mit Näherungsformel berechnete Widerstandswert
 									426,	418,	410,	402,	394,	386,	379,	372,	365,	358,
 									351
 							};
+
 		uint16_t checksum[3] = { 0 };
 
 
