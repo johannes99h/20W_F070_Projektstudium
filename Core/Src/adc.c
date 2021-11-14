@@ -23,7 +23,9 @@
 													};
 const 	uint8_t 	adcSamples = 5;								// erfüllt den gleichen Zweck wie buff_length -> zsm.führen
 		uint8_t 	tempC[adcChannel] = { 0 };
+		uint16_t	checksum[3] = { 0 };
 		uint32_t 	CRCtempC[adcChannel] = { 0 };
+		uint8_t 	checksumNumber = 0;
 
 /*
  * 		Funktionsdefinitionen
@@ -51,7 +53,14 @@ void scheduler()
 		CRCtempC[i] = generateCRC32(tempC[i], adcChannel);
 	}
 
-	TxUART(adcChannel, tempC, CRCtempC);		// später auch CRCtempC übergeben
+	checksumNumber = 0;
+	for(int i = 0; i < 3; i++)
+	{
+		checksum[i] = generateChecksum(tempC, checksumNumber);
+		checksumNumber++;
+	}
+
+	TxUART(adcChannel, tempC, CRCtempC, checksum);		// später auch CRCtempC übergeben
 }
 
 

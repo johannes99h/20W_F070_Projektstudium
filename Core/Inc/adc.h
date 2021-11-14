@@ -31,7 +31,9 @@ const 	uint8_t 	adcSamples;
 		uint16_t 	adcVoltage[adcChannel];
 		uint16_t 	ntcResistance[adcChannel];
 		uint8_t		tempC[adcChannel];
+		uint16_t	checksum[3];
 		uint32_t 	CRCtempC[adcChannel];
+		uint8_t 	checksumNumber;
 
 /*
  * 		Funktionsdeklarationen

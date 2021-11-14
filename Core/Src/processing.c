@@ -21,8 +21,6 @@ const 	uint16_t LUT[151] = {		// mit Näherungsformel berechnete Widerstandswert
 									351
 							};
 
-		uint16_t checksum[3] = { 0 };
-
 
 /* Definition der Funktionen ---------------------------------------------------------*/
 
@@ -81,7 +79,22 @@ uint32_t generateCRC32(uint8_t tempC, uint8_t adcChannel)
  * 	@ret	Array mit berechneten Quersummen
  */
 
-uint16_t *generateChecksum(uint16_t *checksum, uint8_t *tempC, uint8_t adcChannel)
+uint16_t generateChecksum(uint8_t *tempC, uint8_t checksumNumber)
 {
-	return checksum;
+	uint16_t tmp = 0;
+
+	if(checksumNumber == 0)
+	{
+		tmp = tmp + tempC[0] + tempC[1] + tempC[2];
+	}
+	else if(checksumNumber == 1)
+	{
+		tmp = tmp + tempC[3] + tempC[4] + tempC[5];
+	}
+	else
+	{
+		tmp = tmp + tempC[6] + tempC[7] + tempC[8];
+	}
+
+	return tmp;
 }
