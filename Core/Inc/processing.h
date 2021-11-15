@@ -15,13 +15,15 @@ extern 	CRC_HandleTypeDef hcrc;
 
 /* Deklaration der Variablen ---------------------------------------------------------*/
 
-const 	uint16_t LUT[151];
-		uint32_t tempCRC;
+const 	uint16_t 	LUT[151];
+		uint32_t 	tempCRC;
+		uint8_t 	previousTemp;
+		uint8_t 	previousTempPTR;
 
 
 /* Deklaration der Funktionen ---------------------------------------------------------*/
 
-uint8_t 	GetTempCfromLUT(const uint16_t *LUT, uint16_t ntcResistance);
+uint8_t 	GetTempCfromLUT(const uint16_t *LUT, uint16_t ntcResistance, uint8_t previousTemp, uint8_t *previousTempPTR);
 uint16_t 	generateChecksum(uint8_t *tempC, uint8_t checksumNumber);
 uint32_t 	generateCRC32(uint8_t tempC, uint8_t adcChannel);
 

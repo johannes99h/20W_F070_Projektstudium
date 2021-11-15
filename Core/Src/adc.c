@@ -45,7 +45,7 @@ void scheduler()
 
 	for(int i = 0; i < adcChannel; i++)			// auch noch in eine Funktion packen, um hier nur noch den Call stehen zu haben
 	{
-		tempC[i] = GetTempCfromLUT(LUT, ntcResistance[i]);
+		tempC[i] = GetTempCfromLUT(LUT, ntcResistance[i], previousTemp, previousTempPTR);
 	}
 
 	for(int i = 0; i < adcChannel; i++)			// auch noch in eine Funktion packen, um hier nur noch den Call stehen zu haben
