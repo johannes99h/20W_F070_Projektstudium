@@ -22,6 +22,7 @@ const 	uint16_t LUT[151];
 /* Deklaration der Funktionen ---------------------------------------------------------*/
 
 uint8_t 	GetTempCfromLUT(const uint16_t *LUT, uint16_t ntcResistance);
+uint8_t 	*GetTempCArray(uint8_t *tempC, uint8_t adcChannel, const uint16_t *LUT, uint16_t *ntcResistance);
 uint16_t 	generateChecksum(uint8_t *tempC, uint8_t checksumNumber);
 uint32_t 	generateCRC32(uint8_t tempC, uint8_t adcChannel);
 

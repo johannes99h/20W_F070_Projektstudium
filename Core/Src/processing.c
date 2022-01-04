@@ -25,6 +25,24 @@ const 	uint16_t LUT[151] = {		// mit Näherungsformel berechnete Widerstandswert
 /* Definition der Funktionen ---------------------------------------------------------*/
 
 /*
+ * 	@brief	CRC-Berechnung für die Temperatur eines einzelnen NTCs
+ * 	@param	ermittelte Temperatur
+ * 	@ret	Temperatur-Array
+ */
+
+uint8_t *GetTempCArray(uint8_t *tempC, uint8_t adcChannel, const uint16_t *LUT, uint16_t *ntcResistance)
+{
+
+	for(int i = 0; i < adcChannel; i++)			// auch noch in eine Funktion packen, um hier nur noch den Call stehen zu haben
+	{
+		tempC[i] = GetTempCfromLUT(LUT, ntcResistance[i]);
+	}
+
+	return tempC;
+}
+
+
+/*
  * 	@brief	Temperaturermittlung durch Abgleich von Verhältnis zwischen gemessenem und normalem NTC-Widerstand (298K)
  * 	@param	Pointer zum Lookup-Table
  * 	@param	Übergabe des durch den ADC ermittelten Widerstands eines NTCs
@@ -41,8 +59,6 @@ uint8_t GetTempCfromLUT(const uint16_t *LUT, uint16_t ntcResistance)
 	{
 		i++;
 	}
-
-	// noch besser, die alte Temperatur als Ausgangspunkt zu merken?
 
 	// Temperaturzuweisung
 	tempC = i;
