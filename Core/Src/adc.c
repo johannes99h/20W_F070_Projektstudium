@@ -43,7 +43,7 @@ void scheduler()
 
 	GetADCResistance(adcBufferMeanValue);
 
-	GetTempCArray(tempC, adcChannel, LUT, ntcResistance);
+	GetTempCArray(tempC, adcChannel, LUT, ntcResistance, LUToldValues);
 
 	for(int i = 0; i < adcChannel; i++)			// auch noch in eine Funktion packen, um hier nur noch den Call stehen zu haben
 	{

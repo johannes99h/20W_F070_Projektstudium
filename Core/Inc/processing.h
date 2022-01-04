@@ -17,12 +17,13 @@ extern 	CRC_HandleTypeDef hcrc;
 
 const 	uint16_t LUT[151];
 		uint32_t tempCRC;
+		uint16_t LUToldValues[9];
 
 
 /* Deklaration der Funktionen ---------------------------------------------------------*/
 
-uint8_t 	GetTempCfromLUT(const uint16_t *LUT, uint16_t ntcResistance);
-uint8_t 	*GetTempCArray(uint8_t *tempC, uint8_t adcChannel, const uint16_t *LUT, uint16_t *ntcResistance);
+uint8_t 	*GetTempCArray(uint8_t *tempC, uint8_t adcChannel, const uint16_t *LUT, uint16_t *ntcResistance, uint16_t *LUToldValues);
+uint8_t 	GetTempCfromLUT(const uint16_t *LUT, uint16_t ntcResistance, uint8_t startIndex);
 uint16_t 	generateChecksum(uint8_t *tempC, uint8_t checksumNumber);
 uint32_t 	generateCRC32(uint8_t tempC, uint8_t adcChannel);
 
