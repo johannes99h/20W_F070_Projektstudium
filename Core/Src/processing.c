@@ -20,7 +20,6 @@ const 	uint16_t LUT[151] = {		// mit Näherungsformel berechnete Widerstandswert
 									426,	418,	410,	402,	394,	386,	379,	372,	365,	358,
 									351
 							};
-		uint8_t previousTemp = 0;
 
 
 /* Definition der Funktionen ---------------------------------------------------------*/
@@ -32,30 +31,10 @@ const 	uint16_t LUT[151] = {		// mit Näherungsformel berechnete Widerstandswert
  * 	@ret	ermittelte Temperatur in Grad Celsius
  */
 
-uint8_t GetTempCfromLUT(const uint16_t *LUT, uint16_t ntcResistance, uint8_t previousTemp, uint8_t *previousTempPTR)
+uint8_t GetTempCfromLUT(const uint16_t *LUT, uint16_t ntcResistance)
 {
-	uint8_t 	tempC 				= 0;
-	uint8_t 	previousResistance 	= 0;
-	uint8_t 	i 					= previousTemp;
-
-	// Ermitteln des alten Widerstands
-	previousResistance = LUT[i];
-
-	// Vergleich des neuen Widerstands mit dem alten Widerstand
-	if(LUT[i] > ntcResistance)
-	{
-		while(ntcResistance > previousResistance)
-		{
-			i--;
-		}
-	}
-	else
-	{
-		while(ntcResistance < previousResistance)
-		{
-			i++;
-		}
-	}
+	int i = 0;
+	uint8_t tempC;
 
 	// alte Variante, vmtl. relativ ineffizient
 	while(ntcResistance < LUT[i])
@@ -63,14 +42,13 @@ uint8_t GetTempCfromLUT(const uint16_t *LUT, uint16_t ntcResistance, uint8_t pre
 		i++;
 	}
 
+	// noch besser, die alte Temperatur als Ausgangspunkt zu merken?
+
 	// Temperaturzuweisung
 	tempC = i;
 
-	// Speicherung der alten Temperatur mittels Pointer
-	previousTempPTR = &tempC;
-
 	// Plausibilitätskontrolle
-	if(tempC < 0 || tempC > 150)
+	if(tempC < 0 || tempC > 150)		// angeg. Temperaturbereich der NTCs: < 125 Grad Celsius!!!
 	{
 		tempC = 255;
 	}
