@@ -114,8 +114,9 @@ int main(void)
   MX_CRC_Init();
   MX_TIM14_Init();
   /* USER CODE BEGIN 2 */
-  HAL_ADC_Start_DMA(&hadc, (uint32_t *)adcBuffer, buffLength);
   HAL_TIM_Base_Start(&htim1);
+  HAL_TIM_Base_Start(&htim14);
+  HAL_ADC_Start_DMA(&hadc, (uint32_t *)adcBuffer, buffLength);
 
   /* USER CODE END 2 */
 

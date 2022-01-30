@@ -57,7 +57,7 @@ void scheduler()
 		checksumNumber++;
 	}
 
-	TxUART(adcChannel, tempC, CRCtempC, checksum);		// später auch CRCtempC übergeben
+	TxUART(adcChannel, tempC, CRCtempC, checksum, millis);		// später auch CRCtempC übergeben
 }
 
 
@@ -112,7 +112,10 @@ uint16_t *GetADCResistance(uint16_t *adcBufferMeanValue)
 	// Berechnung der einzelnen NTC-Widerstände
 	for(int i = 0; i < adcChannel; i++)
 	{
-		ntcResistance[i] = (adcVoltage[i] * ntcResistance25[i]) / (330 - adcVoltage[i]);
+		// Aufteilung der Berechnungsoperation notwendig, da keine FPU vorhanden
+		uint32_t tmp = 0;
+		tmp = (ntcResistance25[i] * (330 - adcVoltage[i]));
+		ntcResistance[i] = (tmp / adcVoltage[i]);
 	}
 
 	return ntcResistance;

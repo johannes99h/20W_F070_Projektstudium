@@ -8,8 +8,9 @@
 
 /* externe Definitionen ---------------------------------------------------------*/
 
-extern UART_HandleTypeDef huart1;
-extern DMA_HandleTypeDef hdma_usart1_tx;
+extern UART_HandleTypeDef	huart1;
+extern DMA_HandleTypeDef 	hdma_usart1_tx;
+extern TIM_HandleTypeDef 	htim14;
 
 
 /* Deklaration der Variablen ---------------------------------------------------------*/
@@ -18,13 +19,15 @@ uint8_t 	divider[1];
 uint8_t 	adcChannels;
 uint8_t 	howmany;
 uint32_t 	tempCRC;
+uint32_t	millis;
 
 /* Deklaration der Funktionen ---------------------------------------------------------*/
 
-void	TxUART(uint8_t adcChannels, uint8_t *tempC, uint32_t *CRCtempC, uint16_t *checksum);
+void	TxUART(uint8_t adcChannels, uint8_t *tempC, uint32_t *CRCtempC, uint16_t *checksum, uint32_t millis);
 void	singleTempTxUART(uint8_t ntcNumber, uint8_t *transmitTemp);
 void	ntcNumberTxUART(uint8_t ntcNumber);
 void	blankTxUART(uint8_t howmany);
+void 	timeTxUART(uint32_t millis);
 void	CRCTxUART(uint8_t ntcNumber, uint32_t *CRCtempC);
 void	ChecksumTxUART(uint8_t ntcNumber, uint8_t *tempC, uint16_t *checksum);
 

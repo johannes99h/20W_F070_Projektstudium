@@ -4,6 +4,7 @@
 
 uint8_t adcChannels = 9;
 uint8_t howmany; 				// Anzahl der Sternchen!
+uint32_t	millis = 0;
 
 
 /* Definition der Funktionen ---------------------------------------------------------*/
@@ -13,12 +14,18 @@ uint8_t howmany; 				// Anzahl der Sternchen!
  * 		***** NTC1 * 25°C * CRC1 ** NTC2 * 30°C * CRC2 ** ... **********
  */
 
-void TxUART(uint8_t adcChannels, uint8_t *tempC, uint32_t *CRCtempC, uint16_t *checksum)
+void TxUART(uint8_t adcChannels, uint8_t *tempC, uint32_t *CRCtempC, uint16_t *checksum, uint32_t millis)
 {
 	uint8_t ntcNumber = 0;
 
 	// "Header" -> sollte von auswertender Software erkannt werden
 	blankTxUART(5);
+
+	// "Timer-Information"
+	millis = HAL_GetTick();
+	timeTxUART(millis);
+	blankTxUART(2);
+
 
 	for(int j = 0; j < adcChannels; j++)
 	{
@@ -27,17 +34,19 @@ void TxUART(uint8_t adcChannels, uint8_t *tempC, uint32_t *CRCtempC, uint16_t *c
 		ntcNumberTxUART(ntcNumber);
 		blankTxUART(1);
 		singleTempTxUART(ntcNumber, tempC);
-		blankTxUART(1);
+		// blankTxUART(1);
+
+		// blankTxUART(1);
 
 		// Variante 1: berechneten CRC zu jeder einzelnen Temperatur senden
-		CRCTxUART(ntcNumber, CRCtempC);
-		blankTxUART(2);
+		// CRCTxUART(ntcNumber, CRCtempC);
+		// blankTxUART(2);
 
 		// Variante 2: Checksum bestehend aus je drei addierten Temperaturen senden
-		if((j == 2) || (j == 5) || (j == 8))
-		{
-			ChecksumTxUART(ntcNumber, tempC, checksum);
-		}
+		// if((j == 2) || (j == 5) || (j == 8))
+		// {
+		//	ChecksumTxUART(ntcNumber, tempC, checksum);
+		// }
 		blankTxUART(2);
 	}
 
@@ -95,6 +104,16 @@ void blankTxUART(uint8_t howmany)
  * 	@param	Nummer des entsprechenden NTCs (ganzes Array wird übergeben)
  * 	@param	Array mit generierten CRC-Werten
  */
+
+void timeTxUART(uint32_t millis)
+{
+	uint8_t bufferTimeSize;
+	char bufferTime[8];
+
+	bufferTimeSize = sprintf(bufferTime, "%ld", millis);
+
+	HAL_UART_Transmit(&huart1, (uint8_t *)bufferTime, bufferTimeSize, 10);
+}
 
 void CRCTxUART(uint8_t ntcNumber, uint32_t *CRCtempC)
 {
