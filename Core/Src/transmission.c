@@ -2,8 +2,8 @@
 
 /* Definition der Variablen ---------------------------------------------------------*/
 
-uint8_t adcChannels = 9;
-uint8_t howmany; 				// Anzahl der Sternchen!
+uint8_t 	adcChannels = 9;
+uint8_t 	howmany; 				// Anzahl der Sternchen!
 uint32_t	millis = 0;
 
 
@@ -29,11 +29,16 @@ void TxUART(uint8_t adcChannels, uint8_t *tempC, uint32_t *CRCtempC, uint16_t *c
 
 	for(int j = 0; j < adcChannels; j++)
 	{
-		ntcNumber = j;
+		// ntcNumber = j;
 
-		ntcNumberTxUART(ntcNumber);
-		blankTxUART(1);
-		singleTempTxUART(ntcNumber, tempC);
+		// ntcNumberTxUART(ntcNumber);
+		// blankTxUART(1);
+
+		// Übergabe der Temperatur aus dem Array an temp. Integer
+		uint8_t *tmpTempC = &tempC[j];
+
+		// Aufruf der eigentlichen Übertragungsfkt.
+		singleTempTxUART(ntcNumber, tmpTempC);
 		// blankTxUART(1);
 
 		// blankTxUART(1);
@@ -50,8 +55,10 @@ void TxUART(uint8_t adcChannels, uint8_t *tempC, uint32_t *CRCtempC, uint16_t *c
 		blankTxUART(2);
 	}
 
-	// "Tail" -> sollte von auswertender Software erkannt werden (Möglichkeit, eine Plausibilitätskontrolle durch Zählen der Temp.s oder so, einzubauen
-	blankTxUART(10);
+	// Ende der Nachricht -> NewLine um in Matlab mit den Daten besser umgehen zu können
+	uint8_t endLine[2] = "\n\r";			// evtl. auch CR/ASCII-13 notw. um an Zeilenanfang zu gelangen
+	HAL_UART_Transmit(&huart1, endLine, sizeof(endLine), 10);
+
 }
 
 
@@ -91,7 +98,7 @@ void ntcNumberTxUART(uint8_t ntcNumber)
 
 void blankTxUART(uint8_t howmany)
 {
-	uint8_t divider[1] = "*";
+	uint8_t divider[1] = " ";
 
 	for(int i = 0; i < howmany; i++)
 	{

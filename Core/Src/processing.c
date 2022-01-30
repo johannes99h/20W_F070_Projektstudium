@@ -68,6 +68,13 @@ uint8_t GetTempCfromLUT(const uint16_t *LUT, uint16_t ntcResistance, uint8_t sta
 	// int i = 0;
 	uint8_t tempC;
 
+	// zusätzl. Fkt. die den Wert "-1" im tempC-Array verbietet
+	if(ntcResistance == 0)
+	{
+		tempC = 0;
+		return tempC;
+	}
+
 	// neue Variante **********************************************************************
 	if(LUT[startIndex] > ntcResistance)
 	{
